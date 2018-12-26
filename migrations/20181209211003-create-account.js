@@ -8,8 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       type: {
-        type: Sequelize.ENUM('checking', 'corporate_investment', 'individual_investment')
+        type: Sequelize.ENUM('Checking', 'Corporate Investment', 'Individual Investment')
       },
       amount: {
         type: Sequelize.DECIMAL(10,2)

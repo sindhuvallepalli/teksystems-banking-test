@@ -40,15 +40,29 @@ describe('Banking Tests', () => {
   });
 
   describe('create account', () => {
+    it('will give error as account type is not recognized', () => {
+      return new AccountRepository().create({ type: 'Sindhu', bankId: this.Bank.id, userId: this.User.id, amount: 1500 })
+      .then((account) => {}).catch((error) => {
+        expect(error.name).to.equal('SequelizeDatabaseError');
+      });;
+    });
+
+    it('will give error as account does not have an owner', () => {
+      return new AccountRepository().create({ type: 'Sindhu', bankId: this.Bank.id, amount: 1500 })
+      .then((account) => {}).catch((error) => {
+        expect(error.name).to.equal('SequelizeDatabaseError');
+      });;
+    });
+
     it('creates an account', () => {
-      return new AccountRepository().create({ type: 'chequing', bankId: this.Bank.id, userId: this.User.id, amount: 1500 }).then((account) => {
+      return new AccountRepository().create({ type: 'Checking', bankId: this.Bank.id, userId: this.User.id, amount: 1500 }).then((account) => {
         this.Account = account;
-        expect(this.Account.type).to.equal('chequing');
+        expect(this.Account.type).to.equal('Checking');
         expect(this.Account.bankId).to.equal(this.Bank.id);
         expect(this.Account.userId).to.equal(this.User.id);
       });
     });
-    
+
     it('finds account by id', () => {
       return new AccountRepository().findById(this.Account.id).then((account) => {
         expect(account.id).to.equal(this.Account.id);

@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Account = sequelize.define('Account', {
-    type: DataTypes.STRING,
+    type: {
+      type:   DataTypes.ENUM,
+      values: ['Checking', 'Corporate Investment', 'Individual Investment']
+    },
     amount: DataTypes.DECIMAL
   }, {});
   Account.associate = function(models) {
